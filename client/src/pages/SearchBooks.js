@@ -8,6 +8,7 @@ import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
   const [saveBook, { error }] = useMutation(SAVE_BOOK);
+
   const [searchedBooks, setSearchedBooks] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
@@ -33,6 +34,7 @@ const SearchBooks = () => {
       }
 
       const { items } = await response.json();
+
       const bookData = items.map((book) => ({
         bookId: book.id,
         authors: book.volumeInfo.authors || ['No author to display'],
@@ -50,7 +52,6 @@ const SearchBooks = () => {
 
   const handleSaveBook = async (bookId) => {
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
